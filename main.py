@@ -602,6 +602,7 @@ class YuyuInner(Star):
 
     @filter.on_astrbot_loaded()
     async def on_loaded(self):
+        """插件启动时跑一次：起控制台面板、主动循环与情绪心跳。"""
         self._trim_tools()
         if self._task is None or self._task.done():
             self._task = asyncio.create_task(self._reach_loop())
@@ -612,6 +613,7 @@ class YuyuInner(Star):
     @filter.custom_filter(WakeFilter)
     @filter.event_message_type(filter.EventMessageType.ALL)
     async def wake_for_group(self, event: AstrMessageEvent):
+        """群聊里有人叫她的名字（或 @ 她）时，进入接话窗口。"""
         return
 
     # ══════════════════════════════════════
@@ -719,6 +721,7 @@ class YuyuInner(Star):
 
     @filter.event_message_type(filter.EventMessageType.ALL)
     async def owner_wakes(self, event: AstrMessageEvent):
+        """主人在私聊说话时一定回应，并且把她从睡里喊醒。"""
         try:
             uid = str(event.get_sender_id())
             if uid in OWNER_IDS and uid != str(event.get_self_id()):
@@ -1345,6 +1348,7 @@ class YuyuInner(Star):
 
     @filter.on_llm_response()
     async def audit_response(self, event: AstrMessageEvent, resp=None):
+        """回复前过一遍敏感词；命中就替换成一句安全的话。"""
         try:
             if resp is None or not hasattr(resp, "completion_text"):
                 return
@@ -1635,6 +1639,7 @@ class YuyuInner(Star):
     # ══════════════════════════════════════
     @filter.on_llm_request()
     async def see_media(self, event: AstrMessageEvent, req=None):
+        """回答前先看消息里的图片 / 视频 / 动图，必要时抽帧或转写。"""
         if req is None:
             return
         try:
@@ -1674,6 +1679,7 @@ class YuyuInner(Star):
     # ══════════════════════════════════════
     @filter.on_llm_response()
     async def remember_self(self, event: AstrMessageEvent, resp=None):
+        """回答后把这轮对话记进自述缓存，供下一轮回忆。"""
         try:
             text = (getattr(resp, "completion_text", "") or "").strip()
             text = text.replace("[[VOICE]]", "").strip()
@@ -1689,6 +1695,7 @@ class YuyuInner(Star):
 
     @filter.on_llm_request()
     async def recall_self(self, event: AstrMessageEvent, req=None):
+        """回答前回忆刚才聊了什么，避免接不上话。"""
         if req is None:
             return
         # 戳一戳：只有动作没有文字
@@ -1727,6 +1734,7 @@ class YuyuInner(Star):
 
     @filter.on_llm_request()
     async def inject_inner(self, event: AstrMessageEvent, req=None):
+        """回答前把她的状态注入提示词：心情、记事、疤、习惯、承诺、人物档案。"""
         self._ensure_reach_task()
         if req is None or not hasattr(req, "system_prompt"):
             return
