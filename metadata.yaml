@@ -4,7 +4,7 @@ short_desc: 给角色一个会变的心、会记得的记忆和会等人的作�
 desc: 情绪九维与慢心跳、约定回访、群友档案、世界书与关系网、混合记忆检索、风格审批、备份与周记，以及一个自带的本机控制台。
 version: 1.0.0
 author: 阿修
-repo: "https://github.com/your-name/astrbot_plugin_yuyu_kernel"
+repo: "https://github.com/2217969941/astrbot_plugin_yuyu_kernel"
 astrbot_version: ">=4.28.1"
 support_platforms:
   - aiocqhttp
