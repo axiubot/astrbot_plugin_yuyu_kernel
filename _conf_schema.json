@@ -1,0 +1,52 @@
+{
+  "owner_id": {
+    "type": "string",
+    "description": "主人的 QQ 号（主动消息、私聊提醒都发给他）",
+    "default": ""
+  },
+  "owner_umo": {
+    "type": "string",
+    "description": "主人的会话标识，格式：平台:消息类型:QQ号，例如 aiocqhttp:FriendMessage:123456",
+    "default": ""
+  },
+  "owner_name": {
+    "type": "string",
+    "description": "你对主人的称呼（会出现在提示词里）",
+    "default": "主人"
+  },
+  "wake_names": {
+    "type": "string",
+    "description": "群聊里叫她就等于叫醒的名字，用逗号分隔",
+    "default": "御坂,御板"
+  },
+  "enable_panel": {
+    "type": "bool",
+    "description": "是否开启本机控制台（http://127.0.0.1:端口/）",
+    "default": true
+  },
+  "panel_port": {
+    "type": "int",
+    "description": "控制台端口，被占用会自动往后找",
+    "default": 6197
+  },
+  "tts_proxy": {
+    "type": "string",
+    "description": "面板『听她的声音』用的 TTS 地址，留空则隐藏该按钮",
+    "default": ""
+  },
+  "ffmpeg_path": {
+    "type": "string",
+    "description": "ffmpeg 可执行文件路径，留空则用系统 PATH 里的 ffmpeg",
+    "default": ""
+  },
+  "enable_media": {
+    "type": "bool",
+    "description": "是否理解视频/动图（需要 ffmpeg，可选 faster-whisper 转写）",
+    "default": false
+  },
+  "enable_panel_actions": {
+    "type": "bool",
+    "description": "面板里是否允许『跟她说一句』这类写操作",
+    "default": true
+  }
+}
